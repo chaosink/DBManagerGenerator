@@ -2,11 +2,11 @@ import java.sql.*;
 import java.util.*;
 
 class SelectResult {
-	ArrayList<String> attribute;
+	String[] attribute;
 	ArrayList<ArrayList<String>> record;
 
-	SelectResult(ArrayList<String> attribute) {
-		this.attribute = attribute;
+	SelectResult(String attribute) {
+		this.attribute = attribute.split(" ");
 		this.record = new ArrayList<ArrayList<String>>();
 	}
 }
@@ -41,7 +41,10 @@ public class ZJUCourse {
 	public SelectResult select(String attribute, String where) {
 		try {
 			SelectResult sr = new SelectResult(attribute);
-			ResultSet rs = statement.executeQuery("select " + attribute + " from " + table + " where " + where);
+			String query = "select " + attribute + " from " + table;
+			if(!where.isEmpty())
+				query += " where " + where;
+			ResultSet rs = statement.executeQuery(query);
 			while(rs.next()) {
 				ArrayList<String> row = new ArrayList<String>();
 				row.add(rs.getInt("course_id") + "");
@@ -57,8 +60,8 @@ public class ZJUCourse {
 	}
 
 	public void display(SelectResult sr) {
-		for(int i = 0; i < sr.attribute.size(); i++)
-			System.out.print(sr.attribute.get(i) + " ");
+		for(int i = 0; i < sr.attribute.length; i++)
+			System.out.print(sr.attribute[i] + " ");
 		System.out.println();
 		for(int i = 0; i < sr.record.size(); i++) {
 			ArrayList<String> record = sr.record.get(i);

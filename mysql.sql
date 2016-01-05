@@ -31,6 +31,6 @@ create table Classroom (
 	primary key (classroom_id)
 );
 
-insert into Course values (1, "1", "M", "1", "1");
-insert into Course values (2, "2", "M", "2", "2");
-insert into Course values (3, "3", "M", "3", "3");
+insert into Course values (1, "1", 1, 1, 1, "1", "1", "1");
+insert into Course values (2, "2", 2, 2, 2, "2", "2", "2");
+insert into Course values (3, "3", 3, 3, 3, "3", "3", "3");
