@@ -30,7 +30,3 @@ create table Classroom (
 	location char(31),
 	primary key (classroom_id)
 );
-
-insert into Course values (1, "1", 1, 1, 1, "1", "1", "1");
-insert into Course values (2, "2", 2, 2, 2, "2", "2", "2");
-insert into Course values (3, "3", 3, 3, 3, "3", "3", "3");
