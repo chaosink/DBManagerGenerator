@@ -11,14 +11,22 @@ class SelectResult {
 	}
 }
 
-class #tableRecord {
-	#recordMember
-	#tableRecord(#recordArgument) {
-		#recordConstructor
+class TeacherRecord {
+	int teacher_id;
+	String name;
+	String gender;
+	String education;
+	String introduction;
+	TeacherRecord(int teacher_id, String name, String gender, String education, String introduction) {
+		this.teacher_id = teacher_id;
+		this.name = name;
+		this.gender = gender;
+		this.education = education;
+		this.introduction = introduction;
 	}
 };
 
-public class #database#table {
+public class ZJUTeacher {
 	private String database;
 	private String table;
 	private Connection connection;
@@ -27,12 +35,12 @@ public class #database#table {
 
 	public void init(String user, String password) {
 		try {
-			database = "#database";
-			table = "#table";
+			database = "ZJU";
+			table = "Teacher";
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + database, user, password);
 			statement = connection.createStatement();
-			statementInsert = connection.prepareStatement("insert into " + table + " values (#insertMark)");
+			statementInsert = connection.prepareStatement("insert into " + table + " values (?, ?, ?, ?, ?)");
 		} catch(Exception e) {
 			System.out.println(e);
 		}
@@ -105,9 +113,13 @@ public class #database#table {
 		printSeperator(width);
 	}
 
-	public void insert(#tableRecord record) {
+	public void insert(TeacherRecord record) {
 		try {
-			#insertSet
+			statementInsert.setObject(1, record.teacher_id);
+			statementInsert.setObject(2, record.name);
+			statementInsert.setObject(3, record.gender);
+			statementInsert.setObject(4, record.education);
+			statementInsert.setObject(5, record.introduction);
 			statementInsert.executeUpdate();
 		} catch(Exception e) {
 			System.out.println(e);

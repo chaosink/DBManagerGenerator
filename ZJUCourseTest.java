@@ -1,25 +1,23 @@
-import java.util.*;
-
 public class ZJUCourseTest {
 	public static void main(String[] args) {
-		ZJUCourse zjuc = new ZJUCourse();
-		zjuc.init("root", "");
+		ZJUCourse zju = new ZJUCourse();
+		zju.init("root", "");
 
-		zjuc.insert("1, '1', 1, 1, 1, '1', '1', '1'");
-		zjuc.insert("2, '2', 2, 2, 2, '2', '2', '2'");
-		zjuc.insert("3, '3', 3, 3, 3, '3', '3', '3'");
-		zjuc.insert("4, '1', 1, 1, 1, '1', '1', '1'");
-		zjuc.insert("5, '1', 1, 1, 1, '1', '1', '1'");
-		zjuc.insert("6, '1', 1, 1, 1, '1', '1', '1'");
-		zjuc.insert("7, '1', 1, 1, 1, '1', '1', '1'");
-		zjuc.insert("8, '1', 1, 1, 1, '1', '1', '1'");
-		zjuc.insert("9, '1', 1, 1, 1, '1', '1', '1'");
+		zju.insert(new CourseRecord(1, "1", 1, 1, 1, "1", "1", "1"));
+		zju.insert(new CourseRecord(2, "2", 2, 2, 2, "2", "2", "2"));
+		zju.insert(new CourseRecord(3, "3", 3, 3, 3, "3", "3", "3"));
+		zju.insert(new CourseRecord(4, "4", 4, 4, 4, "4", "4", "4"));
+		zju.insert(new CourseRecord(5, "5", 5, 5, 5, "5", "5", "5"));
+		zju.insert(new CourseRecord(6, "6", 6, 6, 6, "6", "6", "6"));
+		zju.insert(new CourseRecord(7, "7", 7, 7, 7, "7", "7", "7"));
+		zju.insert(new CourseRecord(8, "8", 8, 8, 8, "8", "8", "8"));
+		zju.insert(new CourseRecord(9, "9", 9, 9, 9, "9", "9", "9"));
 
-		SelectResult sr = zjuc.select("course_id, teacher_id, classroom_id, credit", "teacher_id <= 3 and teacher_id = 1");
-		zjuc.display(sr);
+		SelectResult sr = zju.select(new String[]{"course_id", "teacher_id", "classroom_id", "credit"}, "course_id <= 7 and teacher_id > 3");
+		zju.display(sr);
 
-		zjuc.delete("");
+		zju.delete("");
 
-		zjuc.terminate();
+		zju.terminate();
 	}
 }

@@ -5,17 +5,39 @@ class SelectResult {
 	String[] attribute;
 	ArrayList<String[]> record;
 
-	SelectResult(String attribute) {
-		this.attribute = attribute.trim().replaceAll(",", " ").split(" +");
+	SelectResult(String[] attribute) {
+		this.attribute = attribute;
 		this.record = new ArrayList<String[]>();
 	}
 }
+
+class CourseRecord {
+	int course_id;
+	String name;
+	int credit;
+	int teacher_id;
+	int classroom_id;
+	String time;
+	String semester;
+	String introduction;
+	CourseRecord(int course_id, String name, int credit, int teacher_id, int classroom_id, String time, String semester, String introduction) {
+		this.course_id = course_id;
+		this.name = name;
+		this.credit = credit;
+		this.teacher_id = teacher_id;
+		this.classroom_id = classroom_id;
+		this.time = time;
+		this.semester = semester;
+		this.introduction = introduction;
+	}
+};
 
 public class ZJUCourse {
 	private String database;
 	private String table;
 	private Connection connection;
 	private Statement statement;
+	private PreparedStatement statementInsert;
 
 	public void init(String user, String password) {
 		try {
@@ -24,6 +46,7 @@ public class ZJUCourse {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + database, user, password);
 			statement = connection.createStatement();
+			statementInsert = connection.prepareStatement("insert into " + table + " values (?, ?, ?, ?, ?, ?, ?, ?)");
 		} catch(Exception e) {
 			System.out.println(e);
 		}
@@ -38,15 +61,18 @@ public class ZJUCourse {
 		}
 	}
 
-	public SelectResult select(String attribute, String where) {
+	public SelectResult select(String[] attribute, String where) {
 		try {
 			SelectResult sr = new SelectResult(attribute);
-			String query = "select " + attribute + " from " + table;
+			String query = "select " + attribute[0];
+			for(int i = 1; i < attribute.length; i++)
+				query += ", " + attribute[i];
+			query += " from " + table;
 			if(!where.isEmpty()) query += " where " + where;
 			ResultSet rs = statement.executeQuery(query);
 			while(rs.next()) {
-				String[] record = new String[sr.attribute.length];
-				for(int i = 0; i < sr.attribute.length; i++)
+				String[] record = new String[attribute.length];
+				for(int i = 0; i < attribute.length; i++)
 					record[i] = rs.getObject(i + 1).toString();
 				sr.record.add(record);
 			}
@@ -93,9 +119,17 @@ public class ZJUCourse {
 		printSeperator(width);
 	}
 
-	public void insert(String record) {
+	public void insert(CourseRecord record) {
 		try {
-			statement.executeUpdate("insert into " + table + " values (" + record + ")");
+			statementInsert.setObject(1, record.course_id);
+			statementInsert.setObject(2, record.name);
+			statementInsert.setObject(3, record.credit);
+			statementInsert.setObject(4, record.teacher_id);
+			statementInsert.setObject(5, record.classroom_id);
+			statementInsert.setObject(6, record.time);
+			statementInsert.setObject(7, record.semester);
+			statementInsert.setObject(8, record.introduction);
+			statementInsert.executeUpdate();
 		} catch(Exception e) {
 			System.out.println(e);
 		}
