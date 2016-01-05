@@ -1,55 +1,25 @@
-// 编写Java程序，产生自动将数据库中一张表转换成类操作的Java程序。包括基本的数据库查询、显示与增、删、改操作。
-// 输入指定数据库的表名，显示或产生Java程序文件。
-// 报告中附上数据库结构图。
-
-import java.sql.*;
+import java.io.*;
 
 public class DBManagerGenerator {
-	Connection connection;
-	PreparedStatement asdf;
-
-	void init(String dbName, String tableName) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, "root", "");
-		} catch(Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	void terminate() {
-		try{
-			connection.close();
-		} catch(Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	void select() {
-
-	}
-
-	void display() {
-
-	}
-
-	void insert() {
-
-	}
-
-	void delete() {
-
-	}
-
-	void update() {
-
-	}
-
 	public static void main(String[] args) {
 		if(args.length < 2) {
 			System.out.println("Error: Database name and table name needed!");
 		}
 
-		DBManagerGenerator dbmg = new DBManagerGenerator();
+		try {
+			File file = new File("DatabaseTable.java");
+			byte[] content = new byte[(int)file.length()];
+			FileInputStream in = new FileInputStream(file);
+			in.read(content);
+			in.close();
+
+			String source = new String(content);
+			file = new File(args[0] + args[1] + ".java");
+			FileOutputStream out = new FileOutputStream(file);
+			out.write(source.replaceAll("#database", args[0]).replaceAll("#table", args[1]).getBytes());
+			out.close();
+		} catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 }

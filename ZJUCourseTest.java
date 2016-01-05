@@ -8,16 +8,17 @@ public class ZJUCourseTest {
 		zjuc.insert("1, '1', 1, 1, 1, '1', '1', '1'");
 		zjuc.insert("2, '2', 2, 2, 2, '2', '2', '2'");
 		zjuc.insert("3, '3', 3, 3, 3, '3', '3', '3'");
+		zjuc.insert("4, '1', 1, 1, 1, '1', '1', '1'");
+		zjuc.insert("5, '1', 1, 1, 1, '1', '1', '1'");
+		zjuc.insert("6, '1', 1, 1, 1, '1', '1', '1'");
+		zjuc.insert("7, '1', 1, 1, 1, '1', '1', '1'");
+		zjuc.insert("8, '1', 1, 1, 1, '1', '1', '1'");
+		zjuc.insert("9, '1', 1, 1, 1, '1', '1', '1'");
 
-		SelectResult sr = zjuc.select("course_id, teacher_id, classroom_id", "course_id = 1 and teacher_id = 1 and classroom_id = 1");
-		zjuc.display(sr);
-		zjuc.update("course_id = 11, teacher_id = 11, classroom_id = 11", "course_id = 1");
-		sr = zjuc.select("course_id, teacher_id, classroom_id", "course_id = 11");
+		SelectResult sr = zjuc.select("course_id, teacher_id, classroom_id, credit", "teacher_id <= 3 and teacher_id = 1");
 		zjuc.display(sr);
 
-		zjuc.delete("course_id = 11");
-		zjuc.delete("course_id = 2");
-		zjuc.delete("course_id = 3");
+		zjuc.delete("");
 
 		zjuc.terminate();
 	}

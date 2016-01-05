@@ -11,7 +11,7 @@ class SelectResult {
 	}
 }
 
-public class ZJUCourse {
+public class #database#table {
 	private String database;
 	private String table;
 	private Connection connection;
@@ -19,8 +19,8 @@ public class ZJUCourse {
 
 	public void init(String user, String password) {
 		try {
-			database = "ZJU";
-			table = "Course";
+			database = "#database";
+			table = "#table";
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + database, user, password);
 			statement = connection.createStatement();

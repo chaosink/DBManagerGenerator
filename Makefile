@@ -13,3 +13,6 @@ ZJUCourseTest.class: ZJUCourseTest.java
 
 run:
 	@ java $(LIB) ZJUCourseTest
+
+gen:
+	@ java DBManagerGenerator ZJU Course
