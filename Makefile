@@ -1,6 +1,7 @@
 LIB  = -Djava.ext.dirs=lib
+TARGET = DBManagerGenerator.class ZJUCourse.class ZJUCourseTest.class ZJUTeacher.class ZJUTeacherTest.class
 
-all: DBManagerGenerator.class ZJUCourse.class ZJUCourseTest.class ZJUTeacher.class ZJUTeacherTest.class
+all: $(TARGET)
 
 DBManagerGenerator.class: DBManagerGenerator.java
 	@ javac DBManagerGenerator.java
@@ -26,3 +27,6 @@ teacher:
 gen:
 	@ java $(LIB) DBManagerGenerator ZJU Course
 	@ java $(LIB) DBManagerGenerator ZJU Teacher
+
+clean:
+	@ rm -f *.class
